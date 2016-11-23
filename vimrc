@@ -73,13 +73,18 @@ Plug 'tpope/vim-speeddating'
 " ---------------------------------------------------------
 " Scala Plugins (ENSIME) -- Experimental
 " ---------------------------------------------------------
-Plug 'ensime/ensime-vim', { 'for': ['scala', 'java'] }
+" Plug 'ensime/ensime-vim', { 'for': ['scala', 'java'] }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
 " ---------------------------------------------------------
 " Syntastic and anything directly required
 " ---------------------------------------------------------
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+
+" ---------------------------------------------------------
+" Markdown and Document Editing
+" ---------------------------------------------------------
+Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
 
 call plug#end()
 
@@ -161,7 +166,7 @@ set pastetoggle=<F2>
 let g:gitgutter_max_signs=500
 
 " lightline configuration (color scheme, etc.)
-let g:lightline = { 'colorscheme': 'wombat' }
+" let g:lightline = { 'colorscheme': 'wombat' }
 set noshowmode
 
 " Enable omni-completion
@@ -208,3 +213,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Goyo configuration (for Markdown, and potentially other documents)
+let g:goyo_width = 120
