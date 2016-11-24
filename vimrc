@@ -126,7 +126,7 @@ set autoindent
 " Basic display settings
 set number            " Show line numbers by default
 set cursorline        " Highlight the current line
-set showmode          
+set noshowmode          
 set showcmd
 set visualbell        " Flash rather than beep
 set noerrorbells      " ... we just don't like beeping
