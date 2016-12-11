@@ -41,6 +41,12 @@ Plug 'airblade/vim-gitgutter'
 " lightline - much improved (and fast) status line plugin
 Plug 'itchyny/lightline.vim'
 
+" tabular - plugin for aligning text
+Plug 'godlygeek/tabular'
+
+" mundo - undo tree visualizer
+Plug 'simnalamburt/vim-mundo'
+
 " YCM, includes installation function
 function! BuildYCM(info)
     " info is a dictionary with 3 fields
@@ -61,7 +67,13 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure' }
 
-" TODO: Add support for syntastic and vim-eastwood
+" ---------------------------------------------------------
+" Haskell Plugins, only enable during Haskell Development
+" ---------------------------------------------------------
+Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+Plug 'Shougo/vimproc.vim', { 'do' : 'make', 'for': 'haskell' }
+Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 
 " ---------------------------------------------------------
 " Vim Org-Mode and supporting plugins
@@ -71,15 +83,14 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-speeddating'
 
 " ---------------------------------------------------------
-" Scala Plugins (ENSIME) -- Experimental
+" Scala Plugins 
 " ---------------------------------------------------------
-" Plug 'ensime/ensime-vim', { 'for': ['scala', 'java'] }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
 " ---------------------------------------------------------
 " Syntastic and anything directly required
 " ---------------------------------------------------------
-" Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic', { 'for': 'haskell' }
 
 " ---------------------------------------------------------
 " Markdown and Document Editing
@@ -108,6 +119,8 @@ set encoding=utf-8
 " History
 set history=512
 set undolevels=128
+set undofile
+set undodir=~/.vim/undo
 
 " Color scheme
 " Usually want 256 color with dark background
@@ -211,8 +224,33 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 " Goyo configuration (for Markdown, and potentially other documents)
 let g:goyo_width = 120
+
+" Haskell stuff, please organize this future self.
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
+nnoremap <leader>hi :GhcModTypeInsert<cr>
+nnoremap <leader>hs :GhcModSplitFunCase<cr>
+nnoremap <leader>ht :GhcModType<cr>
+nnoremap <leader>h/ :GhcModTypeClear<cr>
+nnoremap <leader>hgs :GhcModCheck<cr>
+nnoremap <leader>hcc :GhcModCheck<cr>
+nnoremap <leader>hcl :GhcModLint<cr>
+nnoremap <silent> <leader>hh :Hoogle<CR>
+nnoremap <leader>hH :Hoogle 
+nnoremap <silent> <leader>hi :HoogleInfo<CR>
+nnoremap <leader>hI :HoogleInfo 
+nnoremap <silent> <leader>hz :HoogleClose<CR>
+let g:haskell_tabular = 1
+vmap a= :Tabularize /=<CR>
+vmap a; :Tabularize /::<CR>
+vmap a- :Tabularize /-><CR>
+
+" mundo -- undo tree visualization
+let g:mundo_prefer_python3 = 1
+nnoremap <leader>u :MundoToggle<CR>
