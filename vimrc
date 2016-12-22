@@ -47,6 +47,9 @@ Plug 'godlygeek/tabular'
 " mundo - undo tree visualizer
 Plug 'simnalamburt/vim-mundo'
 
+" search with ack (or ideally ag, see config below)
+Plug 'mileszs/ack.vim'
+
 " YCM, includes installation function
 function! BuildYCM(info)
     " info is a dictionary with 3 fields
@@ -254,3 +257,12 @@ vmap a- :Tabularize /-><CR>
 " mundo -- undo tree visualization
 let g:mundo_prefer_python3 = 1
 nnoremap <leader>u :MundoToggle<CR>
+
+" ack/ag configuration
+" use the 'ag' command in place of 'ack' if it's executable
+" also add <leader>a as our 'ack' shortcut
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
+nnoremap <leader>a :Ack
