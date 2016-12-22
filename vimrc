@@ -261,8 +261,9 @@ nnoremap <leader>u :MundoToggle<CR>
 " ack/ag configuration
 " use the 'ag' command in place of 'ack' if it's executable
 " also add <leader>a as our 'ack' shortcut
+" The ! makes us NOT jump to the first result automatically
 if executable('ag')
     let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
 
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ack!
