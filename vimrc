@@ -1,4 +1,9 @@
-" Plugin loading, installation, etc.
+" =========================================================
+" Vim Plug -- All Plugins
+" ~~~~~~~~~~~~~~~~~~~~~~~
+" - Use :PlugStatus to list plugins
+" - Use :PlugInstall <plugin> to install
+" =========================================================
 
 call plug#begin('~/.vim/plugged')
 
@@ -41,6 +46,11 @@ Plug 'airblade/vim-gitgutter'
 " lightline - much improved (and fast) status line plugin
 Plug 'itchyny/lightline.vim'
 
+" buffer list support for lightline
+" if this doesn't work out, please see ap/vim-buftabline and
+" remove the configuration from the bottom of this file.
+Plug 'taohex/lightline-buffer'
+
 " tabular - plugin for aligning text
 Plug 'godlygeek/tabular'
 
@@ -63,58 +73,51 @@ endfunction
 
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
-" ---------------------------------------------------------
 " Clojure Plugins, only enable during Clojure Development
-" ---------------------------------------------------------
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure' }
 
-" ---------------------------------------------------------
 " Haskell Plugins, only enable during Haskell Development
-" ---------------------------------------------------------
 Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Shougo/vimproc.vim', { 'do' : 'make', 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 
-" ---------------------------------------------------------
 " Vim Org-Mode and supporting plugins
-" ---------------------------------------------------------
 Plug 'jceb/vim-orgmode'
 Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-speeddating'
 
-" ---------------------------------------------------------
 " Scala Plugins 
-" ---------------------------------------------------------
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
-" ---------------------------------------------------------
 " Syntastic and anything directly required
-" ---------------------------------------------------------
-Plug 'scrooloose/syntastic', { 'for': 'haskell' }
+Plug 'scrooloose/syntastic', { 'for': ['haskell', 'rust'] }
 
-" ---------------------------------------------------------
 " Markdown and Document Editing
-" ---------------------------------------------------------
 Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
 
 call plug#end()
 
-" Basic Settings
+" =========================================================
+" Core configuration
+" =========================================================
+
 filetype plugin indent on
 syntax on
 set noswapfile
 set nocompatible
 set modelines=0
-
-" Configure the leader key to be comma
 let mapleader=","
 let maplocalleader=","
 
 " Clean switching between buffers
 set hidden
+
+" Always display the tabline -- this will cause a bar to appear
+" at the top of the window.
+set showtabline=2
 
 " Always use UTF-8 explicitly
 set encoding=utf-8
@@ -159,13 +162,6 @@ set incsearch
 set showmatch
 set hlsearch
 
-" Use leader and / to clear search results
-nmap <silent> <leader>/ :nohlsearch<CR>
-
-" Remap tab to % in normal mode, allows movement among bracket pairs
-nnoremap <tab> %
-vnoremap <tab> %
-
 " Some file types we don't care about in general, add to this over time
 set wildignore=*.class,*.pyc,*.swp
 
@@ -188,39 +184,16 @@ set noshowmode
 " Enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 
-" Custom file types
-autocmd FileType clojure setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType scala   setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" Indentation for file types that don't get their own vimrc
 autocmd FileType sbt     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType sql     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType make    setlocal noexpandtab
-
-" Git Mergetool commands - accept remote, accept local
-nnoremap <silent> <leader>mre :diffg RE
-nnoremap <silent> <leader>mlo :diffg LO
 
 " Assign certain extensions to different file types
 au BufNewFile,BufRead *.md  set filetype=markdown
 au BufNewFile,BufRead *.sbt set filetype=scala
 
-" Used for Clojure only -- reformat files on save
-let g:clj_fmt_autosave=1
-
-" Custom commands for moving around buffers
-nnoremap <leader>bh :bp<cr>
-nnoremap <leader>bl :bn<cr>
-nnoremap <leader>bd :bd<cr>
-
-" Only for Clojure files
-" Use ctrl+c, ctrl+k in normal mode to do a require
-" This hot reloads code into the JVM
-au FileType clojure nmap <c-c><c-k> :Require<cr>
-
-" Git commands (key bindings for fugitive)
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>ga :Git add %:p<cr><cr>
-
-" Syntastic Configuration
+" Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -233,37 +206,139 @@ let g:syntastic_check_on_wq = 0
 " Goyo configuration (for Markdown, and potentially other documents)
 let g:goyo_width = 120
 
-" Haskell stuff, please organize this future self.
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-nnoremap <leader>hi :GhcModTypeInsert<cr>
-nnoremap <leader>hs :GhcModSplitFunCase<cr>
-nnoremap <leader>ht :GhcModType<cr>
-nnoremap <leader>h/ :GhcModTypeClear<cr>
-nnoremap <leader>hgs :GhcModCheck<cr>
-nnoremap <leader>hcc :GhcModCheck<cr>
-nnoremap <leader>hcl :GhcModLint<cr>
-nnoremap <silent> <leader>hh :Hoogle<CR>
-nnoremap <leader>hH :Hoogle 
-nnoremap <silent> <leader>hi :HoogleInfo<CR>
-nnoremap <leader>hI :HoogleInfo 
-nnoremap <silent> <leader>hz :HoogleClose<CR>
-let g:haskell_tabular = 1
-vmap a= :Tabularize /=<CR>
-vmap a; :Tabularize /::<CR>
-vmap a- :Tabularize /-><CR>
-
 " mundo -- undo tree visualization
+" This vimrc is designed to work with Vim that's packaged in
+" Ubuntu 16.04, which utilizes Python 3.
 let g:mundo_prefer_python3 = 1
-nnoremap <leader>u :MundoToggle<CR>
 
-" ack/ag configuration
 " use the 'ag' command in place of 'ack' if it's executable
-" also add <leader>a as our 'ack' shortcut
 " The ! makes us NOT jump to the first result automatically
 if executable('ag')
     let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
 
+" =========================================================
+" Key Bindings
+" ------------
+" This section should be used for ALL non-language-specific
+" bindings. The leader key should be mapped in core config.
+" =========================================================
+
+" View the undo tree using the mundo plugin
+nnoremap <leader>u :MundoToggle<CR>
+
+" Used with vim-ack
 nnoremap <leader>a :Ack!
+
+" Custom commands for moving around buffers
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bn :bn<cr>
+nnoremap <leader>bd :bd<cr>
+
+" Git commands (key bindings for vim-fugitive)
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>ga :Git add %:p<cr><cr>
+
+" Git Mergetool commands - accept remote, accept local
+nnoremap <silent> <leader>mre :diffg RE
+nnoremap <silent> <leader>mlo :diffg LO
+
+" Use leader and / to clear search results
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" Remap tab to % in normal mode, allows movement among bracket pairs
+nnoremap <tab> %
+vnoremap <tab> %
+
+" =========================================================
+" Lightline
+" ---------
+" Lightline is a plugin that manages the tabline -- this
+" should give it a bit more power and fanciness.
+" =========================================================
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'tabline': {
+      \   'left': [ [ 'bufferinfo' ], [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+      \   'right': [ [ 'close' ], ],
+      \ },
+      \ 'component_expand': {
+      \   'buffercurrent': 'lightline#buffer#buffercurrent2',
+      \ },
+      \ 'component_type': {
+      \   'buffercurrent': 'tabsel',
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'readonly': 'LightlineReadonly',
+      \   'modified': 'LightlineModified',
+      \   'filename': 'LightlineFilename',
+      \   'bufferbefore': 'lightline#buffer#bufferbefore',
+      \   'bufferafter': 'lightline#buffer#bufferafter',
+      \   'bufferinfo': 'lightline#buffer#bufferinfo',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+function! LightlineModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! LightlineReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! LightlineFugitive()
+  if exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightlineFilename()
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+" lightline-buffer settings
+let g:lightline_buffer_logo = ''
+let g:lightline_buffer_readonly_icon = ''
+let g:lightline_buffer_modified_icon = '*'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '..'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+let g:lightline_buffer_separator_icon = ' '
+
+let g:lightline_buffer_show_bufnr = 1
+let g:lightline_buffer_rotate = 0
+let g:lightline_buffer_fname_mod = ':t'
+let g:lightline_buffer_excludes = ['vimfiler']
+
+let g:lightline_buffer_maxflen = 30
+let g:lightline_buffer_maxfextlen = 3
+let g:lightline_buffer_minflen = 16
+let g:lightline_buffer_minfextlen = 3
+let g:lightline_buffer_reservelen = 20
