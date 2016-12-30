@@ -67,7 +67,7 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py
+        !./install.py --racer-completer
     endif
 endfunction
 
@@ -83,6 +83,9 @@ Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Shougo/vimproc.vim', { 'do' : 'make', 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
+
+" Rust Plugins
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " Vim Org-Mode and supporting plugins
 Plug 'jceb/vim-orgmode'
