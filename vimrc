@@ -137,6 +137,10 @@ set t_Co=256
 set background=dark
 colorscheme lucid
 
+" Set colors for the YouCompleteMe completion window.
+" This should be done after the colorscheme is selected.
+highlight Pmenu ctermfg=11 ctermbg=8 cterm=bold
+
 " Tab settings - use 4 spaces by default
 set tabstop=4
 set shiftwidth=4
