@@ -8,7 +8,8 @@
 call plug#begin('~/.vim/plugged')
 
 " Install a huge variety of color schemes
-Plug 'flazz/vim-colorschemes'
+" Plug 'flazz/vim-colorschemes'
+Plug 'fcpg/vim-fahrenheit'
 
 " ctrlp provides full path fuzzy * finding
 Plug 'ctrlpvim/ctrlp.vim'
@@ -135,11 +136,18 @@ set undodir=~/.vim/undo
 " Usually want 256 color with dark background
 set t_Co=256
 set background=dark
-colorscheme lucid
+" colorscheme lucid
+colorscheme fahrenheit
 
 " Set colors for the YouCompleteMe completion window.
 " This should be done after the colorscheme is selected.
-highlight Pmenu ctermfg=11 ctermbg=8 cterm=bold
+" highlight Pmenu ctermfg=11 ctermbg=8 cterm=bold
+
+" Highlight settings specifically intended to go with
+" the Fahrenheit color scheme.
+highlight Pmenu ctermfg=95 ctermbg=223 cterm=bold
+highlight PmenuSel ctermfg=223 ctermbg=95 cterm=bold
+highlight ColorColumn ctermbg=235
 
 " Tab settings - use 4 spaces by default
 set tabstop=4
@@ -184,8 +192,6 @@ set pastetoggle=<F2>
 " Maximum number of signs displayed by the git gutter plugin
 let g:gitgutter_max_signs=500
 
-" lightline configuration (color scheme, etc.)
-" let g:lightline = { 'colorscheme': 'wombat' }
 set noshowmode
 
 " Enable omni-completion
@@ -264,6 +270,7 @@ vnoremap <tab> %
 " should give it a bit more power and fanciness.
 " =========================================================
 let g:lightline = {
+      \ 'colorscheme': 'fahrenheit',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ]
