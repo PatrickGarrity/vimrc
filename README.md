@@ -1,7 +1,8 @@
 my vimrc
 ========
 
-This repository contains my primary Vim configuration. Mostly for personal use bouncing my config among machines. Will hopefully undergo some cleanup over time.
+This repository contains my primary Vim configuration. Will hopefully undergo 
+some cleanup over time. It's pretty beefy but has been enjoyable to build up.
 
 # Installation
 
@@ -18,3 +19,7 @@ $ ln -s /home/username/somedir/vimrc/vimrc /home/username/.vimrc
 $ mkdir ~/.vim/ftplugin
 $ ln -s /home/$USER/somedir/vimrc/FT.vim /home/$USER/.vim/ftplugin/FT.vim
 ```
+
+# TODO
+
+Add a 'root' Vim configuration without plugins.

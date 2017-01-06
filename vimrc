@@ -87,6 +87,7 @@ Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 
 " Rust Plugins
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'cespare/vim-toml'
 
 " Vim Org-Mode and supporting plugins
 Plug 'jceb/vim-orgmode'
@@ -183,9 +184,6 @@ set wildignore=*.class,*.pyc,*.swp
 " Save the current file if it has been updated when window focus lost
 au FocusLost * :up
 
-" Save the current file if it has been updated:
-nnoremap <leader>s :up<cr>
-
 " Use F2 to insert paste mode
 set pastetoggle=<F2>
 
@@ -239,6 +237,9 @@ endif
 
 " View the undo tree using the mundo plugin
 nnoremap <leader>u :MundoToggle<CR>
+
+" Save the current file if it has been updated:
+nnoremap <leader>s :up<cr>
 
 " Used with vim-ack
 nnoremap <leader>a :Ack!
