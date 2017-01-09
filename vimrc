@@ -148,7 +148,7 @@ colorscheme fahrenheit
 " the Fahrenheit color scheme.
 highlight Pmenu ctermfg=95 ctermbg=223 cterm=bold
 highlight PmenuSel ctermfg=223 ctermbg=95 cterm=bold
-highlight ColorColumn ctermbg=235
+highlight ColorColumn ctermbg=235 ctermfg=1
 
 " Tab settings - use 4 spaces by default
 set tabstop=4
