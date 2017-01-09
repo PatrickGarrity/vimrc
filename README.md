@@ -23,3 +23,7 @@ $ ln -s /home/$USER/somedir/vimrc/FT.vim /home/$USER/.vim/ftplugin/FT.vim
 # TODO
 
 Add a 'root' Vim configuration without plugins.
+
+# Example
+
+![screenshot](/screenshots/example.png)
