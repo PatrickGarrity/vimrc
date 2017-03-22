@@ -103,6 +103,10 @@ Plug 'scrooloose/syntastic', { 'for': ['haskell', 'rust'] }
 " Markdown and Document Editing
 Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
 
+" SQL and Database Scripting
+Plug 'exu/pgsql.vim'
+let g:sql_type_default = 'pgsql'
+
 call plug#end()
 
 " =========================================================
@@ -201,8 +205,9 @@ autocmd FileType sql     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType make    setlocal noexpandtab
 
 " Assign certain extensions to different file types
-au BufNewFile,BufRead *.md  set filetype=markdown
-au BufNewFile,BufRead *.sbt set filetype=scala
+au BufNewFile,BufRead *.md   set filetype=markdown
+au BufNewFile,BufRead *.sbt  set filetype=scala
+au BufNewFile,BufRead *.conf set filetype=dosini
 
 " Syntastic
 set statusline+=%#warningmsg#
