@@ -107,6 +107,9 @@ Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
 Plug 'exu/pgsql.vim'
 let g:sql_type_default = 'pgsql'
 
+" Dockerfile
+Plug 'ekalinin/Dockerfile.vim'
+
 call plug#end()
 
 " =========================================================
