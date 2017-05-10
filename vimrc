@@ -263,8 +263,8 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>ga :Git add %:p<cr><cr>
 
 " Git Mergetool commands - accept remote, accept local
-nnoremap <silent> <leader>mre :diffg RE
-nnoremap <silent> <leader>mlo :diffg LO
+nnoremap <silent> <leader>mre :diffg RE<cr>
+nnoremap <silent> <leader>mlo :diffg LO<cr>
 
 " Use leader and / to clear search results
 nmap <silent> <leader>/ :nohlsearch<CR>
