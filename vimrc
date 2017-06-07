@@ -8,8 +8,8 @@
 call plug#begin('~/.vim/plugged')
 
 " Color schemes
-" Plug 'fcpg/vim-fahrenheit'
-Plug 'altercation/vim-colors-solarized'
+Plug 'fcpg/vim-fahrenheit'
+"Plug 'altercation/vim-colors-solarized'
 
 " ctrlp provides full path fuzzy * finding
 Plug 'ctrlpvim/ctrlp.vim'
@@ -143,10 +143,10 @@ set undodir=~/.vim/undo
 " Color scheme
 " Usually want 256 color with dark background
 set t_Co=256
-" set background=dark
-" colorscheme fahrenheit
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme fahrenheit
+"set background=light
+"colorscheme solarized
 
 " Set colors for the YouCompleteMe completion window.
 " This should be done after the colorscheme is selected.
@@ -280,7 +280,7 @@ vnoremap <tab> %
 " should give it a bit more power and fanciness.
 " =========================================================
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'fahrenheit',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ]
