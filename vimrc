@@ -192,9 +192,6 @@ set incsearch
 set showmatch
 set hlsearch
 
-" Some file types we don't care about in general, add to this over time
-set wildignore=*.class,*.pyc,*.swp
-
 " Save the current file if it has been updated when window focus lost
 au FocusLost * :up
 
@@ -278,6 +275,29 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Remap tab to % in normal mode, allows movement among bracket pairs
 nnoremap <tab> %
 vnoremap <tab> %
+
+" =========================================================
+" CtrlP
+" -----
+" This is our fuzzy file/buffer search, and we need to setup
+" some ignores for it so that we don't explode our search
+" focus.
+" =========================================================
+
+" This is our core wildignore, setup for JVM and Python
+set wildignore=*.class,*.pyc,*.swp
+
+" Ignore tmp directories, some compressed files
+set wildignore+=*/tmp/*,*.zip,*.tar,*.gz
+
+" Ignore IntelliJ idea -- we don't care about its system files
+set wildignore+=*/.idea/*,*.iml
+
+" Javascript support -- ignore node modules
+set wildignore+=*/node_modules/*
+
+" Additional JVM/Scala/SBT support -- ignore cache files and JARs
+set wildignore+=*.jar
 
 " =========================================================
 " Lightline
