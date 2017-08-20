@@ -98,7 +98,10 @@ Plug 'tpope/vim-speeddating'
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
 " Syntastic and anything directly required
-Plug 'scrooloose/syntastic', { 'for': ['haskell', 'rust'] }
+" Plug 'scrooloose/syntastic', { 'for': ['haskell', 'rust'] }
+
+" w0rp/ale -- async syntastic replacement
+Plug 'w0rp/ale', { 'for': ['rust', 'scala', 'vim'] }
 
 " Markdown and Document Editing
 Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
@@ -184,6 +187,7 @@ set ruler             " Show row and column number
 set laststatus=2      " Last window has a status line
 set colorcolumn=120   " Show a bar at column 120 (indicate long lines)
 set showmatch         " Show matching parens
+set lazyredraw        " redraw only when necessary, hopefully more efficient.
 
 " Search settings
 set ignorecase
@@ -217,14 +221,25 @@ au BufNewFile,BufRead *.sbt  set filetype=scala
 au BufNewFile,BufRead *.conf set filetype=dosini
 
 " Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+
+" Ale
+" ~~~~~~~~~~~~~~~~~~~~~~
+" This is an asynchronous Syntastic replacement.
+let g:ale_sign_column_always = 1
+
+" Code folding
+set foldenable
+set foldlevelstart=10
+set foldnestmax=2
+set foldmethod=indent
 
 " Goyo configuration (for Markdown, and potentially other documents)
 let g:goyo_width = 120
@@ -275,6 +290,13 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Remap tab to % in normal mode, allows movement among bracket pairs
 nnoremap <tab> %
 vnoremap <tab> %
+
+" Code folding -- leader + f should fold/unfold
+nnoremap <leader>f za
+
+" Toggle line numbers, common task
+nnoremap <leader>n :set number<cr>
+nnoremap <leader>N :set nonumber<cr>
 
 " =========================================================
 " CtrlP
@@ -392,3 +414,6 @@ let g:lightline_buffer_maxfextlen = 3
 let g:lightline_buffer_minflen = 16
 let g:lightline_buffer_minfextlen = 3
 let g:lightline_buffer_reservelen = 20
+
+" Fahrenheit customization to force better buffer coloration.
+" let s:p.tabline.middle = [[ '#a8a8a8', '#262626', 248, 235 ]]
