@@ -113,6 +113,9 @@ let g:sql_type_default = 'pgsql'
 " Dockerfile
 Plug 'ekalinin/Dockerfile.vim'
 
+" Elm Language
+Plug 'elmcast/elm-vim'
+
 call plug#end()
 
 " =========================================================
