@@ -222,6 +222,8 @@ autocmd FileType make    setlocal noexpandtab
 au BufNewFile,BufRead *.md   set filetype=markdown
 au BufNewFile,BufRead *.sbt  set filetype=scala
 au BufNewFile,BufRead *.conf set filetype=dosini
+au BufNewFile,BufRead *.deckspec set filetype=yaml
+au BufNewFile,BufRead *.template set filetype=json
 
 " Syntastic
 "set statusline+=%#warningmsg#
