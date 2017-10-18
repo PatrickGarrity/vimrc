@@ -1,4 +1,4 @@
-" =========================================================
+
 " Vim Plug -- All Plugins
 " ~~~~~~~~~~~~~~~~~~~~~~~
 " - Use :PlugStatus to list plugins
@@ -8,8 +8,8 @@
 call plug#begin('~/.vim/plugged')
 
 " Color schemes
-Plug 'fcpg/vim-fahrenheit'
-" Plug 'altercation/vim-colors-solarized'
+" Plug 'chriskempson/base16-vim'
+Plug 'tyrannicaltoucan/vim-quantum'
 
 " ctrlp provides full path fuzzy * finding
 Plug 'ctrlpvim/ctrlp.vim'
@@ -28,9 +28,6 @@ Plug 'tpope/vim-surround'
 
 " Some basic mappings, useful for things like git diff navigation
 Plug 'tpope/vim-unimpaired'
-
-" Text objects for JSON (and pretty printing)
-Plug 'tpope/vim-jdaddy'
 
 " Dispatch, used as a dependency for other development plugins
 Plug 'tpope/vim-dispatch'
@@ -87,24 +84,13 @@ Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 
 " Rust Plugins
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'cespare/vim-toml'
-
-" Vim Org-Mode and supporting plugins
-Plug 'jceb/vim-orgmode'
-Plug 'vim-scripts/taglist.vim'
-Plug 'tpope/vim-speeddating'
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 
 " Scala Plugins 
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
-" Syntastic and anything directly required
-" Plug 'scrooloose/syntastic', { 'for': ['haskell', 'rust'] }
-
 " w0rp/ale -- async syntastic replacement
 Plug 'w0rp/ale', { 'for': ['rust', 'scala', 'vim'] }
-
-" Markdown and Document Editing
-Plug 'junegunn/goyo.vim', { 'for': ['markdown', 'md'] }
 
 " SQL and Database Scripting
 Plug 'exu/pgsql.vim'
@@ -114,7 +100,7 @@ let g:sql_type_default = 'pgsql'
 Plug 'ekalinin/Dockerfile.vim'
 
 " Elm Language
-Plug 'elmcast/elm-vim'
+Plug 'elmcast/elm-vim', { 'for': 'elm' }
 
 call plug#end()
 
@@ -150,9 +136,14 @@ set undodir=~/.vim/undo
 " Usually want 256 color with dark background
 set t_Co=256
 set background=dark
-colorscheme fahrenheit
-" set background=light
-" colorscheme solarized
+set termguicolors
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" colorscheme base16-default-dark
+colorscheme quantum
+let g:quantum_italics = 1
+let g:rainbow_active = 1
 
 " Set colors for the YouCompleteMe completion window.
 " This should be done after the colorscheme is selected.
@@ -160,12 +151,6 @@ colorscheme fahrenheit
 
 " Highlight settings specifically intended to go with
 " the Fahrenheit color scheme.
-highlight Pmenu ctermfg=95 ctermbg=223 cterm=bold
-highlight PmenuSel ctermfg=223 ctermbg=95 cterm=bold
-highlight ColorColumn ctermbg=235 ctermfg=1
-
-" TODO: Create a setting for Solarized light.
-" TODO: Find way to split out theming into separate configuration files.
 " highlight Pmenu ctermfg=95 ctermbg=223 cterm=bold
 " highlight PmenuSel ctermfg=223 ctermbg=95 cterm=bold
 " highlight ColorColumn ctermbg=235 ctermfg=1
@@ -183,8 +168,9 @@ set number            " Show line numbers by default
 set cursorline        " Highlight the current line
 set noshowmode          
 set showcmd
-set visualbell        " Flash rather than beep
 set noerrorbells      " ... we just don't like beeping
+set visualbell        " Flash rather than beep
+set t_vb=             " Don't flassh please
 set ttyfast           " Some optimizations for rendering
 set ruler             " Show row and column number
 set laststatus=2      " Last window has a status line
@@ -199,8 +185,9 @@ set incsearch
 set showmatch
 set hlsearch
 
-" Save the current file if it has been updated when window focus lost
-au FocusLost * :up
+" Save the current file if it has been updated when window focus lost.
+" Currently disabled, not sure if I actually want this.
+" au FocusLost * :up
 
 " Use F2 to insert paste mode
 set pastetoggle=<F2>
@@ -223,39 +210,25 @@ au BufNewFile,BufRead *.md   set filetype=markdown
 au BufNewFile,BufRead *.sbt  set filetype=scala
 au BufNewFile,BufRead *.conf set filetype=dosini
 
-" Syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-
 " Ale
 " ~~~~~~~~~~~~~~~~~~~~~~
 " This is an asynchronous Syntastic replacement.
 let g:ale_sign_column_always = 1
 
 " Code folding
-set foldenable
-set foldlevelstart=10
-set foldnestmax=2
-set foldmethod=indent
-
-" Goyo configuration (for Markdown, and potentially other documents)
-let g:goyo_width = 120
+" Currently disabled, need to experiment with this.
+" set foldenable
+" set foldlevelstart=10
+" set foldnestmax=2
+" set foldmethod=indent
 
 " mundo -- undo tree visualization
-" This vimrc is designed to work with Vim that's packaged in
-" Ubuntu 16.04, which utilizes Python 3.
 let g:mundo_prefer_python3 = 1
 
 " use the 'ag' command in place of 'ack' if it's executable
 " The ! makes us NOT jump to the first result automatically
-if executable('ag')
-    let g:ackprg = 'ag --nogroup --nocolor --column'
+if executable('rg')
+    let g:ackprg = 'rg --vimgrep --no-heading'
 endif
 
 " =========================================================
@@ -295,7 +268,7 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 " Code folding -- leader + f should fold/unfold
-nnoremap <leader>f za
+" nnoremap <leader>f za
 
 " Toggle line numbers, common task
 nnoremap <leader>n :set number<cr>
@@ -309,11 +282,12 @@ nnoremap <leader>N :set nonumber<cr>
 " focus.
 " =========================================================
 
-" This is our core wildignore, setup for JVM and Python
-set wildignore=*.class,*.pyc,*.swp
+" This is our core wildignore.
+" Java class files, Python (compiled), swap files, C object files
+set wildignore=*.class,*.pyc,*.swp,*.o
 
 " Ignore tmp directories, some compressed files
-set wildignore+=*/tmp/*,*.zip,*.tar,*.gz
+set wildignore+=*/tmp/*,*.zip,*.tar,*.gz,*.bz2
 
 " Ignore IntelliJ idea -- we don't care about its system files
 set wildignore+=*/.idea/*,*.iml
@@ -331,7 +305,7 @@ set wildignore+=*.jar
 " should give it a bit more power and fanciness.
 " =========================================================
 let g:lightline = {
-      \ 'colorscheme': 'fahrenheit',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ]
