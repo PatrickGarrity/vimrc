@@ -1,4 +1,3 @@
-
 " Vim Plug -- All Plugins
 " ~~~~~~~~~~~~~~~~~~~~~~~
 " - Use :PlugStatus to list plugins
@@ -12,7 +11,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'tyrannicaltoucan/vim-quantum'
 
 " ctrlp provides full path fuzzy * finding
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+
+" Let's try switching over to FZF
+Plug 'junegunn/fzf.vim'
 
 " Commands for automatically commenting lines in different languages
 Plug 'scrooloose/nerdcommenter'
@@ -47,7 +49,7 @@ Plug 'itchyny/lightline.vim'
 " buffer list support for lightline
 " if this doesn't work out, please see ap/vim-buftabline and
 " remove the configuration from the bottom of this file.
-Plug 'taohex/lightline-buffer'
+" Plug 'taohex/lightline-buffer'
 
 " tabular - plugin for aligning text
 Plug 'godlygeek/tabular'
@@ -121,7 +123,7 @@ set hidden
 
 " Always display the tabline -- this will cause a bar to appear
 " at the top of the window.
-set showtabline=2
+" set showtabline=2
 
 " Always use UTF-8 explicitly
 set encoding=utf-8
@@ -174,7 +176,7 @@ set t_vb=             " Don't flassh please
 set ttyfast           " Some optimizations for rendering
 set ruler             " Show row and column number
 set laststatus=2      " Last window has a status line
-set colorcolumn=120   " Show a bar at column 120 (indicate long lines)
+" set colorcolumn=120   " Show a bar at column 120 (indicate long lines)
 set showmatch         " Show matching parens
 set lazyredraw        " redraw only when necessary, hopefully more efficient.
 
@@ -299,6 +301,15 @@ set wildignore+=*/node_modules/*
 set wildignore+=*.jar
 
 " =========================================================
+" FZF
+" -----
+" Keybindings for the hot new fuzzy search tool.
+" =========================================================
+nmap ; :Buffers<CR>
+nmap <leader>t :Tags<CR>
+nmap <C-p> :Files<CR>
+
+" =========================================================
 " Lightline
 " ---------
 " Lightline is a plugin that manages the tabline -- this
@@ -391,6 +402,3 @@ let g:lightline_buffer_maxfextlen = 3
 let g:lightline_buffer_minflen = 16
 let g:lightline_buffer_minfextlen = 3
 let g:lightline_buffer_reservelen = 20
-
-" Fahrenheit customization to force better buffer coloration.
-" let s:p.tabline.middle = [[ '#a8a8a8', '#262626', 248, 235 ]]
