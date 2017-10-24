@@ -248,6 +248,7 @@ nnoremap <leader>s :up<cr>
 
 " Used with vim-ack
 nnoremap <leader>a :Ack!
+nmap \x :cclose<cr>
 
 " Custom commands for moving around buffers
 nnoremap <leader>bp :bp<cr>
