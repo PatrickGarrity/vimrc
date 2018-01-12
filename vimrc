@@ -67,7 +67,7 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py --racer-completer
+        !./install.py --racer-completer --js-completer
     endif
 endfunction
 
@@ -79,10 +79,10 @@ Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'venantius/vim-cljfmt', { 'for': 'clojure' }
 
 " Haskell Plugins, only enable during Haskell Development
-Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+" Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+" Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Shougo/vimproc.vim', { 'do' : 'make', 'for': 'haskell' }
-Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
+" Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 
 " Rust Plugins
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -90,6 +90,9 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 
 " Scala Plugins 
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+
+" Javascript Plugins
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " w0rp/ale -- async syntastic replacement
 Plug 'w0rp/ale', { 'for': ['rust', 'scala', 'vim'] }
@@ -187,6 +190,9 @@ set incsearch
 set showmatch
 set hlsearch
 
+" Completion -- disable the preview window because it's usually annoying
+set completeopt-=preview
+
 " Save the current file if it has been updated when window focus lost.
 " Currently disabled, not sure if I actually want this.
 " au FocusLost * :up
@@ -199,10 +205,10 @@ let g:gitgutter_max_signs=500
 
 set noshowmode
 
-" Enable omni-completion
-set omnifunc=syntaxcomplete#Complete
-
 " Indentation for file types that don't get their own vimrc
+autocmd FileType java    setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType groovy  setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType gradle  setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType sbt     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType sql     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType make    setlocal noexpandtab
