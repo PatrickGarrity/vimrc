@@ -95,7 +95,7 @@ Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " w0rp/ale -- async syntastic replacement
-Plug 'w0rp/ale', { 'for': ['rust', 'scala', 'vim'] }
+Plug 'w0rp/ale', { 'for': ['rust', 'scala', 'vim', 'elm'] }
 
 " SQL and Database Scripting
 Plug 'exu/pgsql.vim'
@@ -240,6 +240,13 @@ if executable('rg')
 endif
 
 " =========================================================
+" FZF
+" -----
+" Fuzzy search tool
+" =========================================================
+let $FZF_DEFAULT_COMMAND='rg --files --no-messages "" .'
+
+" =========================================================
 " Key Bindings
 " ------------
 " This section should be used for ALL non-language-specific
@@ -261,10 +268,6 @@ nnoremap <leader>bp :bp<cr>
 nnoremap <leader>bn :bn<cr>
 nnoremap <leader>bd :bd<cr>
 
-" Git commands (key bindings for vim-fugitive)
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>ga :Git add %:p<cr><cr>
-
 " Git Mergetool commands - accept remote, accept local
 nnoremap <silent> <leader>mre :diffg RE<cr>
 nnoremap <silent> <leader>mlo :diffg LO<cr>
@@ -276,19 +279,29 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 nnoremap <tab> %
 vnoremap <tab> %
 
-" Code folding -- leader + f should fold/unfold
-" nnoremap <leader>f za
-
 " Toggle line numbers, common task
 nnoremap <leader>n :set number<cr>
 nnoremap <leader>N :set nonumber<cr>
 
+" Regenerate and search tags. Also allow searching tags from the current
+" buffer.
+nnoremap <leader>tm :!ctags -R<CR>
+nnoremap <leader>ts :Tags<cr>
+nnoremap <leader>tw :call fzf#vim#tags("'".expand('<cword>'))<cr>
+nnoremap <leader>tb :BTags<cr>
+
+" FZF
+nmap ; :Buffers<CR>
+nmap <C-p> :Files<CR>
+
 " =========================================================
-" CtrlP
-" -----
-" This is our fuzzy file/buffer search, and we need to setup
-" some ignores for it so that we don't explode our search
-" focus.
+" ctags
+" =========================================================
+" Look for tags in the current directory, or the current git directory.
+set tags=./.git/tags,tags
+
+" =========================================================
+" Ignores
 " =========================================================
 
 " This is our core wildignore.
@@ -306,15 +319,6 @@ set wildignore+=*/node_modules/*
 
 " Additional JVM/Scala/SBT support -- ignore cache files and JARs
 set wildignore+=*.jar
-
-" =========================================================
-" FZF
-" -----
-" Keybindings for the hot new fuzzy search tool.
-" =========================================================
-nmap ; :Buffers<CR>
-nmap <leader>t :Tags<CR>
-nmap <C-p> :Files<CR>
 
 " =========================================================
 " Lightline
