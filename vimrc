@@ -214,9 +214,12 @@ set noshowmode
 set omnifunc=syntaxcomplete#Complete
 
 " Indentation for file types that don't get their own vimrc
+autocmd FileType java    setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType sbt     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType sql     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType make    setlocal noexpandtab
+autocmd FileType gradle  setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType groovy  setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " Assign certain extensions to different file types
 au BufNewFile,BufRead *.md   set filetype=markdown
@@ -283,6 +286,7 @@ nnoremap <leader>bd :bd<cr>
 
 " Git commands (key bindings for vim-fugitive)
 nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>ga :Git add %:p<cr><cr>
 
 " Git Mergetool commands - accept remote, accept local
